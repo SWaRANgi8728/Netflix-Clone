@@ -2,6 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const cors=require('cors');
+const path = require('path');
+
 // Initialize the app
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -9,6 +11,9 @@ const PORT = process.env.PORT || 3000;
 // Middleware to parse JSON bodies
 app.use(express.json());
 app.use(cors());
+
+// Serve static assets (CSS, JS, images, etc.) directly from the root directory
+app.use(express.static(path.join(__dirname))); 
 
 // Connect to MongoDB
 mongoose.connect('mongodb://localhost:27017/userDB', {
@@ -84,6 +89,11 @@ app.post('/register', (req, res) => {
         .catch(err => {
             return res.status(500).json({ message: 'Database error.' });
         });
+});
+
+// Serve the index.html file when accessing the root URL
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));  
 });
 
 // Start the server
