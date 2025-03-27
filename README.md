@@ -59,6 +59,7 @@ npm install
 
 ### 3. Set Up MongoDB
 In server.js file, you’ll find this part of the code:
+
 mongoose.connect('mongodb://localhost:27017/userDB', { ... })
 
 ### 4. Start the Backend Server
